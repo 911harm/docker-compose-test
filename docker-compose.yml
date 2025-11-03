@@ -1,9 +1,12 @@
-version: "3.8"
-
 services:
   web911harm:
     container_name: web911harm
     build: .
     restart: always
     ports:
-      - "8080:80"
+      - "3000:3000"   # para Next SSR. Cambia a 80:80 si usas nginx/static
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web911harm.rule=Host(`web.911harm.com`)"
+      - "traefik.http.routers.web911harm.entrypoints=websecure"
+      - "traefik.http.routers.web911harm.tls.certresolver=letsencrypt"
